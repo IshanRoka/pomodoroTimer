@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       
+        h1{
+            font-size: 40px;
+            margin: 20px 0;
+        }
+        .time{
+            text-align: center;
+        }
+        .btn{
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .start, .stop, .reset{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            color: white;
+
+        }
+        .start{
+            background-color: green;
+        }
+        .stop{
+            background-color: red;
+        }
+        .reset{
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pomodoro Timer</h1>
+        <div class="time">25:00</div>
+        <div class="btn">
+            <button class="start">START</button>
+            <button class="stop">STOP</button>
+            <button class="reset">RESET</button></div>
+    </div>
+    <script>
+        const start=document.querySelector(".start")
+        const stopp=document.querySelector(".stop")
+        const reset=document.querySelector(".reset")
+        const timer=document.querySelector(".time")
+        let interval;
+        let timeLeft=1500
+
+        const updateTimer=()=>{
+            let min=Math.floor(timeLeft/60)
+            let sec=timeLeft%60;
+            let formattedTimer=min+":"+sec
+            timer.innerHTML=formattedTimer
+        }
+        const startTimer=()=>{
+            interval=setInterval(()=>{
+                timeLeft--
+                updateTimer();
+                if(timeLeft===0){
+                    clearInterval(interval)
+                    alert("Time up!")
+                    timeLeft=1500;
+                    updateTimer()
+                }
+            },1000)
+        }
+        const stopTimer=()=>{
+            clearInterval(interval)
+        }
+        const resetTimer=()=>{
+            clearInterval(interval)
+            timeLeft=1500;
+            updateTimer()
+        }
+
+        start.addEventListener("click",startTimer)
+        stopp.addEventListener("click",stopTimer)
+        reset.addEventListener("click",resetTimer)
+
+    </script>
+</body>
+</html>
